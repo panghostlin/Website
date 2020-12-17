@@ -57,7 +57,7 @@ function	Header() {
 		<HomeHeader>
 			<Link href="/">
 				<LogoCol>
-					<img src={'/static/images/logo.svg'} />
+					<img src={'/images/logo.svg'} />
 				</LogoCol>
 			</Link>
 			<MenuCols>

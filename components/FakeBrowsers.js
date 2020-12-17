@@ -8,86 +8,11 @@
 ** @Last modified time:		Tuesday 18 February 2020 - 16:17:14
 *******************************************************************************/
 
-import	React, {useState, useRef, useEffect}			from	'react';
+import	React, {useState}			from	'react';
+import	Image						from	'next/image';
 import	styled, {css, keyframes}	from	'styled-components';
-import	useIntersectionObserver		from	'../utils/useIntesectionObserver';
 
-const	backgroundColor = '#191c28';
 const	backgroundAccentColor = '#242a3b';
-const	backgroundPatterns = [
-	require(`../static/images/fakePicture01.svg`),
-	require(`../static/images/fakePicture02.svg`),
-	require(`../static/images/fakePicture03.svg`),
-	require(`../static/images/summers/fakePicture_summer03.svg`),
-	require(`../static/images/jungles/fakePicture_jungle09.svg`),
-	require(`../static/images/fakePicture06.svg`),
-	require(`../static/images/fakePicture07.svg`),
-	require(`../static/images/fakePicture08.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset01.svg`),
-];
-
-const	backgroundDeserts = [
-	require(`../static/images/deserts/fakePicture_desert01.svg`),
-	require(`../static/images/deserts/fakePicture_desert02.svg`),
-	require(`../static/images/deserts/fakePicture_desert03.svg`),
-	require(`../static/images/deserts/fakePicture_desert04.svg`),
-	require(`../static/images/deserts/fakePicture_desert05.svg`),
-	require(`../static/images/deserts/fakePicture_desert06.svg`),
-	require(`../static/images/deserts/fakePicture_desert07.svg`),
-	require(`../static/images/deserts/fakePicture_desert08.svg`),
-	require(`../static/images/deserts/fakePicture_desert09.svg`),
-];
-const	backgroundJungles = [
-	require(`../static/images/jungles/fakePicture_jungle01.svg`),
-	require(`../static/images/jungles/fakePicture_jungle02.svg`),
-	require(`../static/images/jungles/fakePicture_jungle03.svg`),
-	require(`../static/images/jungles/fakePicture_jungle04.svg`),
-	require(`../static/images/jungles/fakePicture_jungle05.svg`),
-	require(`../static/images/jungles/fakePicture_jungle06.svg`),
-	require(`../static/images/jungles/fakePicture_jungle07.svg`),
-	require(`../static/images/jungles/fakePicture_jungle08.svg`),
-	require(`../static/images/jungles/fakePicture_jungle09.svg`),
-];
-const	backgroundCities = [
-	require(`../static/images/cities/fakePicture_city01.svg`),
-	require(`../static/images/cities/fakePicture_city02.svg`),
-	require(`../static/images/cities/fakePicture_city03.svg`),
-	require(`../static/images/cities/fakePicture_city04.svg`),
-	require(`../static/images/cities/fakePicture_city05.svg`),
-	require(`../static/images/cities/fakePicture_city06.svg`),
-];
-const	backgroundSummers = [
-	require(`../static/images/summers/fakePicture_summer01.svg`),
-	require(`../static/images/summers/fakePicture_summer02.svg`),
-	require(`../static/images/summers/fakePicture_summer03.svg`),
-	require(`../static/images/summers/fakePicture_summer04.svg`),
-	require(`../static/images/summers/fakePicture_summer05.svg`),
-	require(`../static/images/summers/fakePicture_summer06.svg`),
-	require(`../static/images/summers/fakePicture_summer07.svg`),
-	require(`../static/images/summers/fakePicture_summer08.svg`),
-	require(`../static/images/summers/fakePicture_summer09.svg`),
-];
-const	backgroundBeachSunsets = [
-	require(`../static/images/beachSunsets/fakePicture_beachSunset01.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset02.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset03.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset04.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset05.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset06.svg`),
-	require(`../static/images/beachSunsets/fakePicture_beachSunset07.svg`),
-];
-const	backgroundBrittany = [
-	require(`../static/images/brittany/fakePicture_brittany01.svg`),
-	require(`../static/images/brittany/fakePicture_brittany02.svg`),
-	require(`../static/images/brittany/fakePicture_brittany03.svg`),
-	require(`../static/images/brittany/fakePicture_brittany04.svg`),
-	require(`../static/images/brittany/fakePicture_brittany05.svg`),
-	require(`../static/images/brittany/fakePicture_brittany06.svg`),
-	require(`../static/images/brittany/fakePicture_brittany07.svg`),
-	require(`../static/images/brittany/fakePicture_brittany08.svg`),
-	require(`../static/images/brittany/fakePicture_brittany09.svg`),
-];
-
 const	zoomIn = keyframes`
 	0% {transform: scale(0); opacity: 0;}
 	100 {transform: scale(1); opacity: 1;}
@@ -131,12 +56,7 @@ const	FakeBrowserPicture = styled.div`
     height: 16vh;
     border-radius: 4px;
     box-shadow: 0 8px 10px -2px rgba(0,0,0,.45);
-	background-image: ${props => `url(${props.background})`};
-	background-size: cover;
-	background-position-x: center;
-	background-position-y: ${props => props.position || `0%`};
-	contain: strict;
-	contain: content;
+	overflow: hidden;
 	will-change: transform;
 	cursor: pointer;
 	display: flex;
@@ -156,17 +76,35 @@ const	FakeBrowserEmptyPicture = styled.div`
 function	MainFakeBrowser() {
 	return (
 		<FakeBrowser>
-			<FakeBrowserPicture isVisible background={backgroundPatterns[0]} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[1]} position={`30%`} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[2]} position={`20%`} />
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture01.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture02.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture03.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
 
-			<FakeBrowserPicture isVisible background={backgroundPatterns[3]} position={`75%`} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[4]} position={`20%`} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[5]} position={`50%`} />
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/summers/fakePicture_summer03.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/jungles/fakePicture_jungle09.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture06.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
 
-			<FakeBrowserPicture isVisible background={backgroundPatterns[6]} position={`20%`} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[7]} />
-			<FakeBrowserPicture isVisible background={backgroundPatterns[8]} position={`20%`} />
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture07.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/fakePicture08.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
+			<FakeBrowserPicture isVisible>
+				<Image src={`/images/beachSunsets/fakePicture_beachSunset01.svg`} layout={'fill'} objectFit={'cover'} loading={'eager'} priority />
+			</FakeBrowserPicture>
 		</FakeBrowser>
 	);
 }
@@ -322,24 +260,11 @@ const	Back = styled.div`
 `;
 
 
-function	FakeBrowserPictureWrapper(props) {
-	const	imageRef = useRef();
-	const	[visible, set_visible] = useState(false);
-
-	useIntersectionObserver({
-		target: imageRef,
-		onIntersect: ([{isIntersecting}], observerElement) => {
-			if (isIntersecting) {
-				set_visible(true);
-				observerElement.unobserve(imageRef.current);
-			}
-		}
-	});
-
+function	FakeBrowserPictureWrapper({background}) {
 	return (
-		<span ref={imageRef}>
-			{visible && <FakeBrowserPicture {...props} />}
-		</span>
+		<FakeBrowserPicture>
+			<Image loading={'eager'} priority src={background} layout={'fill'} objectFit={'cover'} />
+		</FakeBrowserPicture>
 	)
 }
 
@@ -361,7 +286,7 @@ function	GalleryFakeBrowser() {
 					set_albumName('My purple city');
 					set_view('city');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundCities[1]} />
+					<FakeBrowserPictureWrapper background={'/images/cities/fakePicture_city02.svg'} />
 					<p>{'My purple city'}</p>
 					<span>{'6 pictures - 20/01/2020'}</span>
 				</FakeBrowserAlbum>
@@ -370,7 +295,7 @@ function	GalleryFakeBrowser() {
 					set_albumName('Summer 2019');
 					set_view('summer');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundSummers[1]} position={'bottom'} />
+					<FakeBrowserPictureWrapper background={'/images/summers/fakePicture_summer02.svg'} />
 					<p>{'Summer 2019'}</p>
 					<span>{'107 pictures - 07/07/2019'}</span>
 				</FakeBrowserAlbum>
@@ -379,7 +304,7 @@ function	GalleryFakeBrowser() {
 					set_albumName('Desert pictures');
 					set_view('desert');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundDeserts[8]} position={'50%'} />
+					<FakeBrowserPictureWrapper background={'/images/deserts/fakePicture_desert09.svg'} />
 					<p>{'Desert pictures'}</p>
 					<span>{'24 pictures - 06/04/2019'}</span>
 				</FakeBrowserAlbum>
@@ -388,7 +313,7 @@ function	GalleryFakeBrowser() {
 					set_albumName('Brittany');
 					set_view('brittany');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundBrittany[8]} position={'bottom'} />
+					<FakeBrowserPictureWrapper background={'/images/brittany/fakePicture_brittany09.svg'} />
 					<p>{'Brittany'}</p>
 					<span>{'89 pictures - 15/02/2019'}</span>
 				</FakeBrowserAlbum>
@@ -397,7 +322,7 @@ function	GalleryFakeBrowser() {
 					set_albumName('Sunsets at Monaco');
 					set_view('beachSunset');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundBeachSunsets[1]} position={'center'} />
+					<FakeBrowserPictureWrapper background={'/images/beachSunsets/fakePicture_beachSunset07.svg'} />
 					<p>{'Sunsets at Monaco'}</p>
 					<span>{'7 pictures - 27/08/2018'}</span>
 				</FakeBrowserAlbum>
@@ -406,13 +331,13 @@ function	GalleryFakeBrowser() {
 					set_albumName('Amazonian Jungle');
 					set_view('jungle');
 				}}>
-					<FakeBrowserPictureWrapper background={backgroundJungles[8]} />
+					<FakeBrowserPictureWrapper background={'/images/jungles/fakePicture_jungle09.svg'} />
 					<p>{'Amazonian Jungle'}</p>
 					<span>{'245 pictures - 30/05/2016'}</span>
 				</FakeBrowserAlbum>
 
 				<FakeBrowserAlbum onClick={resetView}>
-					<FakeBrowserPictureWrapper background={backgroundPatterns[0]} />
+					<FakeBrowserPictureWrapper background={'/images/fakePicture01.svg'} />
 					<p>{'~~~~~~~~~~~~~~~'}</p>
 					<span>{'107 pictures - 07/07/2019'}</span>
 				</FakeBrowserAlbum>
@@ -427,33 +352,33 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[0])}
-						background={backgroundDeserts[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[1])}
-						background={backgroundDeserts[1]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[2])}
-						background={backgroundDeserts[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[8])}
-						background={backgroundDeserts[8]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[3])}
-						background={backgroundDeserts[3]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[4])}
-						background={backgroundDeserts[4]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[5])}
-						background={backgroundDeserts[5]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[6])}
-						background={backgroundDeserts[6]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundDeserts[7])}
-						background={backgroundDeserts[7]} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert01.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert02.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert03.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert09.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert09.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert04.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert05.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert06.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert07.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert07.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/deserts/fakePicture_desert08.svg')}>
+						<Image src={'/images/deserts/fakePicture_desert08.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 				</FakeBrowserAlbumView>
 			</FakeBrowserAlbumContainer>
 		);
@@ -466,33 +391,33 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[8])}
-						background={backgroundJungles[8]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[0])}
-						background={backgroundJungles[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[1])}
-						background={backgroundJungles[1]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[2])}
-						background={backgroundJungles[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[3])}
-						background={backgroundJungles[3]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[4])}
-						background={backgroundJungles[4]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[5])}
-						background={backgroundJungles[5]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[6])}
-						background={backgroundJungles[6]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundJungles[7])}
-						background={backgroundJungles[7]} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle09.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle09.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle01.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle02.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle03.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle04.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle05.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle06.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle07.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle07.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/jungles/fakePicture_jungle08.svg')}>
+						<Image src={'/images/jungles/fakePicture_jungle08.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 				</FakeBrowserAlbumView>
 			</FakeBrowserAlbumContainer>
 		);
@@ -505,24 +430,24 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[0])}
-						background={backgroundCities[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[1])}
-						background={backgroundCities[1]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[2])}
-						background={backgroundCities[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[3])}
-						background={backgroundCities[3]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[4])}
-						background={backgroundCities[4]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundCities[5])}
-						background={backgroundCities[5]} position={'center'} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city01.svg')}>
+						<Image src={'/images/cities/fakePicture_city01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city02.svg')}>
+						<Image src={'/images/cities/fakePicture_city02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city03.svg')}>
+						<Image src={'/images/cities/fakePicture_city03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city04.svg')}>
+						<Image src={'/images/cities/fakePicture_city04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city05.svg')}>
+						<Image src={'/images/cities/fakePicture_city05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/cities/fakePicture_city06.svg')}>
+						<Image src={'/images/cities/fakePicture_city06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 					<FakeBrowserEmptyPicture />
 					<FakeBrowserEmptyPicture />
 					<FakeBrowserEmptyPicture />
@@ -538,33 +463,33 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[0])}
-						background={backgroundSummers[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[1])}
-						background={backgroundSummers[1]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[2])}
-						background={backgroundSummers[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[3])}
-						background={backgroundSummers[3]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[4])}
-						background={backgroundSummers[4]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[5])}
-						background={backgroundSummers[5]} position={'20%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[6])}
-						background={backgroundSummers[6]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[7])}
-						background={backgroundSummers[7]} position={'20%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundSummers[8])}
-						background={backgroundSummers[8]} position={'20%'} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer01.svg')}>
+						<Image src={'/images/summers/fakePicture_summer01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer02.svg')}>
+						<Image src={'/images/summers/fakePicture_summer02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer03.svg')}>
+						<Image src={'/images/summers/fakePicture_summer03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer04.svg')}>
+						<Image src={'/images/summers/fakePicture_summer04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer05.svg')}>
+						<Image src={'/images/summers/fakePicture_summer05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer06.svg')}>
+						<Image src={'/images/summers/fakePicture_summer06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer07.svg')}>
+						<Image src={'/images/summers/fakePicture_summer07.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer08.svg')}>
+						<Image src={'/images/summers/fakePicture_summer08.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/summers/fakePicture_summer09.svg')}>
+						<Image src={'/images/summers/fakePicture_summer09.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 				</FakeBrowserAlbumView>
 			</FakeBrowserAlbumContainer>
 		);
@@ -577,27 +502,27 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[0])}
-						background={backgroundBeachSunsets[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[1])}
-						background={backgroundBeachSunsets[1]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[2])}
-						background={backgroundBeachSunsets[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[3])}
-						background={backgroundBeachSunsets[3]} position={'60%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[4])}
-						background={backgroundBeachSunsets[4]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[5])}
-						background={backgroundBeachSunsets[5]} position={'20%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBeachSunsets[6])}
-						background={backgroundBeachSunsets[6]} position={'center'} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset01.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset02.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset03.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset04.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset05.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset06.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/beachSunsets/fakePicture_beachSunset07.svg')}>
+						<Image src={'/images/beachSunsets/fakePicture_beachSunset07.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 					<FakeBrowserEmptyPicture />
 					<FakeBrowserEmptyPicture />
 				</FakeBrowserAlbumView>
@@ -612,33 +537,33 @@ function	GalleryFakeBrowser() {
 					<p>{albumName}</p>
 				</FakeBrowserAlbumNavbar>
 				<FakeBrowserAlbumView>
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[0])}
-						background={backgroundBrittany[0]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[1])}
-						background={backgroundBrittany[1]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[2])}
-						background={backgroundBrittany[2]} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[3])}
-						background={backgroundBrittany[3]} position={'60%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[4])}
-						background={backgroundBrittany[4]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[5])}
-						background={backgroundBrittany[5]} position={'20%'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[6])}
-						background={backgroundBrittany[6]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[7])}
-						background={backgroundBrittany[7]} position={'center'} />
-					<FakeBrowserPicture
-						onClick={() => set_lightBox(backgroundBrittany[8])}
-						background={backgroundBrittany[8]} position={'bottom'} />
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany01.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany01.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany02.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany02.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany03.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany03.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany04.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany04.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany05.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany05.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany06.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany06.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany07.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany07.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany08.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany08.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
+					<FakeBrowserPicture onClick={() => set_lightBox('/images/brittany/fakePicture_brittany09.svg')}>
+						<Image src={'/images/brittany/fakePicture_brittany09.svg'} layout={'fill'} objectFit={'cover'} />
+					</FakeBrowserPicture>
 				</FakeBrowserAlbumView>
 			</FakeBrowserAlbumContainer>
 		);
@@ -664,7 +589,6 @@ function	GalleryFakeBrowser() {
 			{renderAlbumBeach()}
 			{renderAlbumBritanny()}
 			{renderFakeLightbox()}
-			
 			<FakeBrowserFlyingButton>{'+'}</FakeBrowserFlyingButton>
 		</FakeBrowser>
 	);

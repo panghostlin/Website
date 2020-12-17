@@ -5,12 +5,11 @@
 ** @Filename:				_document.js
 **
 ** @Last modified by:		Tbouder
-** @Last modified time:		Saturday 15 February 2020 - 16:12:19
+** @Last modified time:		Saturday 22 February 2020 - 19:52:52
 *******************************************************************************/
 
-
 import	React								from	'react';
-import	Document, {Head, Main, NextScript}	from	'next/document';
+import	Document, {Html, Head, Main, NextScript}	from	'next/document';
 import	{ServerStyleSheet}					from	'styled-components';
 
 export default class MyDocument extends Document
@@ -44,18 +43,17 @@ export default class MyDocument extends Document
 	render()
 	{
 		return (
-			<html lang={'fr'}>
+			<Html lang={'fr'}>
 				<title>{'Panghostlin'}</title>
 				<Head>
-					<link rel={'shortcut icon'} type={'image/x-icon'} href={'/static/images/favicon.ico'} />
-					<meta name={'viewport'} content={'width=device-width, initial-scale=1'} />
+					<link rel={'shortcut icon'} type={'image/x-icon'} href={'/images/favicon.ico'} />
 					<meta property='og:title' content='Panghostlin' />
 				</Head>
 				<body>
 					<Main />
 					<NextScript />
 				</body>
-			</html>
+			</Html>
 		);
 	}
 }

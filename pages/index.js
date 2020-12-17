@@ -252,37 +252,37 @@ function	Feature() {
 			<FeatureItems>
 				<ItemRow>
 					<FeatureItem top content={'All our code is open source. Anyone can check the code and make sure that there is no hijacking or spying and that your privacy is respected.'}>
-						<img src={'/static/images/github_logo.svg'} />
+						<img src={'/images/github_logo.svg'} />
 						{'Open Source'}
 					</FeatureItem>
 					<FeatureItem top content={'All sensitive data is encrypted and we have no way to access it. Only you can.'}>
-						<img src={'/static/images/feature_lock.svg'} />
+						<img src={'/images/feature_lock.svg'} />
 						{'Encryption'}
 					</FeatureItem>
 					<FeatureItem top content={'We don’t trust companies that track you or want to know more about you. We do not provide them with any information.'}>
-						<img src={'/static/images/feature_hide.svg'} />
+						<img src={'/images/feature_hide.svg'} />
 						{'No tracking, no ads'}
 					</FeatureItem>
 					<FeatureItem top content={'We strive for the greatest possible transparency: price, hosting, code, fees.'}>
-						<img src={'/static/images/feature_transparency.svg'} />
+						<img src={'/images/feature_transparency.svg'} />
 						{'Transparency'}
 					</FeatureItem>
 				</ItemRow>
 				<ItemRow>
 					<FeatureItem content={'We don’t care who you are. We don’t care where you come from. We don’t record any personal information. You just need an e-mail to register.'}>
-						<img src={'/static/images/feature_anonymous.svg'} />
+						<img src={'/images/feature_anonymous.svg'} />
 						{'Anonymity'}
 					</FeatureItem>
 					<FeatureItem content={'We create keys from the hash of your password. We don’t have them, you have them, you can export them and only your keys can decrypt your pictures. #notYouKeysNotYourCoins'}>
-						<img src={'/static/images/feature_key.svg'} />
+						<img src={'/images/feature_key.svg'} />
 						{'Your keys'}
 					</FeatureItem>
 					<FeatureItem content={'It’s not just about privacy. The environment matters too. We try to provide the most environmentally friendly platform possible.'}>
-						<img src={'/static/images/feature_leaf.svg'} />
+						<img src={'/images/feature_leaf.svg'} />
 						{'As green as possible'}
 					</FeatureItem>
 					<FeatureItem content={'Because your privacy is at stake, we work around the clock to provide you with your own easy-to-install Panghostlin server.'}>
-						<img src={'/static/images/feature_selfHosting.svg'} />
+						<img src={'/images/feature_selfHosting.svg'} />
 						{'Self hosting'}
 					</FeatureItem>
 				</ItemRow>

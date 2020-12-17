@@ -59,7 +59,7 @@ function	FooterComp() {
 	return (
 		<Footer>
 			<FooterCol>
-				<img src={'/static/images/logo.svg'} />
+				<img src={'/images/logo.svg'} />
 			</FooterCol>
 			<FooterCol>
 				<Link href={'/'}><b>{'Panghostlin'}</b></Link>

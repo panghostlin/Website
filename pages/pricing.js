@@ -430,7 +430,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'bitcoin:1NcFh3CvDPnp4MAo3mn1mcUcPBDhgJz9Kq'}
 						content={'1NcFh3CvDPnp4MAo3mn1mcUcPBDhgJz9Kq'}>
-						<img src={'/static/images/sponsor_btc.svg'} />
+						<img src={'/images/sponsor_btc.svg'} />
 						<p>{'Bitcoin'}</p>
 					</SupportWayItem>
 					<SupportWayItem
@@ -438,7 +438,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'litecoin:LXsEPCNAu1EsKRjUZz8hXj6YXerhdaDmGX'}
 						content={'LXsEPCNAu1EsKRjUZz8hXj6YXerhdaDmGX'}>
-						<img src={'/static/images/sponsor_ltc.svg'} />
+						<img src={'/images/sponsor_ltc.svg'} />
 						<p>{'Litecoin'}</p>
 					</SupportWayItem>
 					<SupportWayItem
@@ -446,7 +446,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'ethereum:0xc79f1910AfE226cFb36A9823843b30bf0102836A'}
 						content={'0xc79f1910AfE226cFb36A9823843b30bf0102836A'}>
-						<img src={'/static/images/sponsor_eth.svg'} />
+						<img src={'/images/sponsor_eth.svg'} />
 						<p>{'Ethereum'}</p>
 					</SupportWayItem>
 					<SupportWayItem
@@ -454,7 +454,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'https://brave.com/tho211'}
 						content={'brave.com/tho211'}>
-						<img src={'/static/images/sponsor_bat.svg'} />
+						<img src={'/images/sponsor_bat.svg'} />
 						<p>{'Basic Attention Token'}</p>
 					</SupportWayItem>
 					<SupportWayItem
@@ -462,7 +462,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'https://paypal.me/TBouder'}
 						content={'paypal.me/TBouder'}>
-						<img src={'/static/images/paypal_logo.svg'} />
+						<img src={'/images/paypal_logo.svg'} />
 						<p>{'Paypal'}</p>
 					</SupportWayItem>
 					<SupportWayItem
@@ -470,7 +470,7 @@ function	Index(props) {
 						rel={'nofollow'}
 						href={'https://github.com/panghostlin'}
 						content={'github.com/panghostlin'}>
-						<img src={'/static/images/github_logo.svg'} />
+						<img src={'/images/github_logo.svg'} />
 						<p>{'Github Sponsor'}</p>
 					</SupportWayItem>
 				</SupportWays>
